@@ -1,0 +1,55 @@
+<div class="col-md-12">
+  <h3>Traitement de la réclamation</h3>
+</div>
+<div class="col-md-6">
+  <form [formGroup]="traitReclamationForm" autocomplete="off" (ngSubmit)="saveReclamationTraite(traitReclamationForm.value)">
+    <div class="form-group">
+      <label for="eventNumDossier" >Numero de dossier:</label>
+      <input formControlName="numDossier" id="numDossier" type="text" class="form-control" placeholder="num Dossier..."/>
+    </div>
+    <div class="form-group">
+      <label for="eventTitre">Titre de la réclamation:</label>
+      <input formControlName="titre" id="titre" type="text" class="form-control" placeholder="titre de la reclamation..."/>
+    </div>
+    <div class="form-group">
+      <label for="eventDate">Date:</label>
+      <input formControlName="date" id="eventDate" type="date" class="form-control" placeholder="Date..." />
+    </div>
+    <div class="form-group">
+      <label for="eventType" ng-disabled="!user?.id===111" >Type:</label>
+      <select formControlName="type" class="form-control">
+        <option value="Administrative">Administrative</option>
+        <option value="Technique">Technique</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="eventLocalite" >Localite:</label>
+      <input formControlName="localite" id="localite" type="text" class="form-control" placeholder="localite de la reclamation..."/>
+    </div>
+    <div class="form-group">
+      <label for="eventDescription">Description:</label>
+      <textarea formControlName="description" id="description" rows=3 class="form-control" placeholder="description..."></textarea>
+    </div>
+    <div class="form-group">
+      <label for="eventEtat">Etat:</label>
+      <select formControlName="etat" class="form-control" selected="non affecte">
+          <option  value="1" [selected]="this.reclamation.etat==='1'" [hidden]="this.user.id!=111">non affecté</option>
+          <option value="2" [selected]="this.reclamation.etat==='2'">affecté non traité</option>
+          <option value="3" [selected]="this.reclamation.etat==='3'" >affecté traité</option>
+      </select>
+    </div>
+    <div class="form-group" >
+      <label for="eventAffectation" >Agent Responsable:</label>
+      <select formControlName="affectation" [(ngModel)]="selectedAffectation" name="selectedAffectation" id="eventAffectation" type="text" class="form-control" >
+          <option *ngFor="let agent of usersLocalite"  [selected]="agent.id == reclamation.affectation" [ngValue]="agent.id" >{{agent.lastName}} {{agent.firstName}} {{agent.poste}}</option>
+      </select>
+    </div>
+    <div class="form-group" >
+      <label for="rapport">Rapport:</label>
+      <textarea formControlName="rapport" [disabled]="chef" id="rapport" rows=3 class="form-control" placeholder="rapport..."></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <button type="button"  [routerLink]="['/user/profile']" class="btn btn-default">Annuler</button>
+    <button type="button" (click)="supprimer()" class="btn btn-default" [hidden]="!chef">Supprimer la reclamation</button>
+  </form>
+</div>

@@ -1,0 +1,112 @@
+
+<div>
+      <h1>
+        Bienvenue dans votre espace personnel
+        <button type="button" class="btn btn-warning" style="float:right" (click)="logout()">Deconnexion</button>
+      </h1>
+  <hr/>
+      <div class="well hoverwell thumbnail">
+           <h2>Information General :</h2>
+           <div>Nom: {{client?.nom}}</div>
+           <div>Prenom: {{client?.prenom}}</div>
+           <div>Email: {{client?.email}} </div>
+           <div>Adresse: {{client?.adresse}} </div>
+       </div>
+           <div>
+               <h1>Liste des factures a regler</h1>
+               <hr/>
+               <body ng-controller="checkboxCtrl">
+                 <div  *ngFor="let rec of reclamations" class="col-md-4">
+                      <facture-thumbnail (eventChecked)="calculer($event)"  [reclamation]="rec" [tout]="reclamations" ></facture-thumbnail>
+                 </div>
+               </body>
+               <div style="text-align: center;">Frais du service en ligne : 14.57 DH</div>
+               <div style="text-align: center;">Total Général: {{montant}} DH</div>
+          </div>
+          <div style="text-align: center">
+                <button type="button" class="btn btn-warning"  (click)="retour()">Retour</button>
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="valider()">Valider</button>
+          </div>
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Detail Paiement </h4>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+              <div class="row">
+                  <!-- You can make it whatever width you want. I'm making it full width
+                       on <= small devices and 4/12 page width on >= medium devices -->
+                  <div class="col-xs-12 col-md-4">
+
+
+                      <!-- CREDIT CARD FORM STARTS HERE -->
+                      <div class="panel panel-default credit-card-box">
+                          <div class="panel-heading display-table" >
+                              <div class="row display-tr" >
+                                  <h3 class="panel-title display-td" >         Payment</h3>
+                                  <div class="display-td" >
+                                      <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="panel-body">
+                            <form role="form" id="payment-form" method="POST" (submit)="getToken()">
+                              <span class="payment-message">{{message}}</span>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="cardNumber">NUMERO CARTE BANCAIRE</label>
+                                                <div class="input-group">
+                                                    <input [(ngModel)]="cardNumber" name="card-number" type="text" size="20" data-stripe="number">
+
+                                                    <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-7 col-md-7">
+                                            <div class="form-group">
+                                              <label for="cardExpiry"><span class="hidden-xs">EXPIRATION</span><span class="visible-xs-inline">EXP</span> DATE</label>
+                                              <input [(ngModel)]="expiryMonth" name="expiry-month" type="text" size="2" data-stripe="exp_month">
+                                              <span> / </span>
+                                              <input [(ngModel)]="expiryYear" name="expiry-year" type="text" size="2" data-stripe="exp_year">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-5 col-md-5 pull-right">
+                                            <div class="form-group">
+                                                <label for="cardCVC">CV CODE</label>
+                                                  <input [(ngModel)]="cvc" name="cvc" type="text" size="4" data-stripe="cvc">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <button class="subscribe btn btn-success btn-lg btn-block" type="button">Valider paiement</button>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="display:none;">
+                                        <div class="col-xs-12">
+                                            <p class="payment-errors"></p>
+                                        </div>
+                                    </div>
+                                </form>
+                          </div>
+                      </div>
+                      <!-- CREDIT CARD FORM ENDS HERE -->
+
+
+                  </div>
+
+
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

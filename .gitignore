@@ -1,0 +1,9 @@
+node_modules
+typings
+/app/**/*.js
+/app/*.js
+/app/*.map
+/app/**/*.js
+/app/**/*.map
+.vscode/
+readme.MD

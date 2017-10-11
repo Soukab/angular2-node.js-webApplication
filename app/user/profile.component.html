@@ -1,0 +1,23 @@
+<div>
+      <h1>
+        Bienvenue sur votre profil personnel
+        <button type="button" class="btn btn-warning" style="float:right" (click)="logout()">Deconnexion</button>
+      </h1>
+  <hr/>
+    <form #profileForm="ngForm" (ngSubmit)="saveProfile(profileForm.value)"autocomplete="off" novalidate>
+      <div class="well hoverwell thumbnail">
+           <h2>Information General :</h2>
+           <div>Nom: {{user?.lastName}}</div>
+           <div>Prenom: {{user?.firstName}}</div>
+           <div>Localite: {{user?.localite.name}} </div>
+           <div>Poste: {{user?.poste}} </div>
+       </div>
+       <div>
+           <h1>Liste des reclamations a regler</h1>
+           <hr/>
+           <div  *ngFor="let rec of reclamation" class="col-md-4">
+                <reclamation-thumbnail  [reclamation]="rec"></reclamation-thumbnail>
+           </div>
+      </div>
+      </form>
+</div>

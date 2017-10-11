@@ -1,0 +1,49 @@
+<h1>Nouvelle réclamation</h1>
+<hr>
+<div class="col-md-6">
+  <form #newEventForm="ngForm" (ngSubmit)="saveEvent(newEventForm.value)" autocomplete="off" novalidate>
+    <div class="form-group" [ngClass]="{'error': newEventForm.controls.numDossier?.invalid && newEventForm.controls.numDossier?.touched}">
+      <label for="eventNumDossier">Numero de dossier:</label>
+      <em *ngIf="newEventForm.controls.numDossier?.invalid && (newEventForm.controls.numDossier?.touched)">Obligatoire</em>
+      <input (ngModel)="numDossier" name="numDossier" required id="numDossierEvent" type="text" class="form-control" placeholder="Votre numero de dossier..." />
+    </div>
+
+    <div class="form-group" [ngClass]="{'error': newEventForm.controls.titre?.invalid && newEventForm.controls.titre?.touched}">
+      <label for="eventTitre">Titre:</label>
+      <em *ngIf="newEventForm.controls.titre?.invalid && (newEventForm.controls.titre?.touched)">Obligatoire</em>
+      <input (ngModel)="titre" name="titre" required id="titre" type="text" class="form-control" placeholder="Titre pour votre réclamation..." />
+    </div>
+
+    <div class="form-group" [ngClass]="{'error': newEventForm.controls.date?.invalid && newEventForm.controls.date?.touched}">
+      <label for="eventDate">Date:</label>
+      <em *ngIf="newEventForm.controls.date?.invalid && (newEventForm.controls.date?.touched)">Obligatoire</em>
+      <input (ngModel)="date" name="date" required id="eventDate" type="date" class="form-control" placeholder="format (mm/dd/yyyy)..." />
+    </div>
+
+    <div class="form-group" [ngClass]="{'error': newEventForm.controls.type?.invalid && newEventForm.controls.type?.touched}">
+      <label for="eventType">Type de réclamation:</label>
+      <em *ngIf="newEventForm.controls.type?.invalid && (newEventForm.controls.type?.touched)">Obligatoire</em>
+      <select name="type" [(ngModel)]="type" required id="eventType" class="form-control" >
+         <option value="Administrative">Administrative</option>
+         <option value="Technique">Technique</option>
+      </select>
+   </div>
+
+    <div class="form-group" [ngClass]="{'error': newEventForm.controls.description?.invalid && newEventForm.controls.description?.touched}">
+      <label for="eventDescription">Description:</label>
+      <em *ngIf="newEventForm.controls.description?.invalid && (newEventForm.controls.description?.touched)">Obligatoire</em>
+      <textarea (ngModel)="description" name="description" required id="eventDescription" class="form-control" cols="50" placeholder="Je réclame..." ></textarea>
+    </div>
+
+    <div class="form-group" [ngClass]="{'error': newEventForm.controls.localite?.invalid && newEventForm.controls.localite?.touched}">
+      <label for="eventLocalite">Localite:</label>
+      <em *ngIf="newEventForm.controls.localite?.invalid && (newEventForm.controls.localite?.touched)">Obligatoire</em>
+      <select [(ngModel)]="selectedLocalite" name="selectedLocalite" id="eventLocalite" type="text" class="form-control">
+          <option *ngFor="let c of localite" [ngValue]="c.code" >{{c.name}}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="newEventForm.invalid">Save</button>
+    <button type="button" [disabled]="newEventForm.invalid" class="btn btn-default" (click)="cancel()">Cancel</button>
+  </form>
+</div>
